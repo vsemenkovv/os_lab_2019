@@ -1,8 +1,8 @@
 #include "revert_string.h"
 #include  <string.h>
-#include ‘<stdlib.h>’
+#include <stdlib.h>
 
-void RevertString(char *str)
+extern void RevertString(char *str)
 {
 
 	int N = strlen(str) - 1;
