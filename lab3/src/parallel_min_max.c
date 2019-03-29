@@ -40,18 +40,24 @@ int main(int argc, char **argv) {
         switch (option_index) {
           case 0:
             seed = atoi(optarg);
-            // your code here
-            // error handling
+             if (seed <= 0) {
+                printf("seed must be a positive number\n");
+                return 1;
+              }
             break;
           case 1:
             array_size = atoi(optarg);
-            // your code here
-            // error handling
+            if (array_size <= 0) {
+                printf("array_size must be a positive number\n");
+                return 1;
+              }
             break;
           case 2:
             pnum = atoi(optarg);
-            // your code here
-            // error handling
+            if (pnum <= 0) {
+                printf("pnum must be a positive number\n");
+                return 1;
+              }
             break;
           case 3:
             with_files = true;
@@ -88,23 +94,40 @@ int main(int argc, char **argv) {
   GenerateArray(array, array_size, seed);
   int active_child_processes = 0;
 
+
+    int part = array_size/pnum;
+    int pipefd[2];
+    
+    pipe(pipefd);
+    
+    pid_t currentPID;
+    
   struct timeval start_time;
   gettimeofday(&start_time, NULL);
-
+struct MinMax m;
   for (int i = 0; i < pnum; i++) {
     pid_t child_pid = fork();
+    currentPID = child_pid;
     if (child_pid >= 0) {
       // successful fork
       active_child_processes += 1;
       if (child_pid == 0) {
         // child process
-
         // parallel somehow
-
+            
+             if(i*part < array_size)
+             m = GetMinMax(array + i*part,  0, part);
+         else
+            m = GetMinMax(array + array_size - part, 0, part);
+        printf("\n\tPARENT: %d, CHILD: %d, this->PID: %d || min: %i, max: %i\n" , getppid(), getpid(), currentPID, m.min, m.max);
         if (with_files) {
           // use files here
+           FILE* fp = fopen("processOut.txt", "a");
+          fwrite(&m, sizeof(struct MinMax), 1, fp);
+          fclose(fp);
         } else {
           // use pipe here
+          write(pipefd[1],&m,sizeof(struct MinMax));
         }
         return 0;
       }
@@ -117,7 +140,10 @@ int main(int argc, char **argv) {
 
   while (active_child_processes > 0) {
     // your code here
-
+close(pipefd[1]);
+    
+    wait(NULL);
+    printf(kill(currentPID, SIGKILL) == 0 ? "killed child process\n" : "error while killing\n");
     active_child_processes -= 1;
   }
 
@@ -131,8 +157,16 @@ int main(int argc, char **argv) {
 
     if (with_files) {
       // read from files
+       FILE* fp = fopen("processOut.txt", "rb");
+        printf("\nBYTE FILE POS: %i, FILE POINTER: %p" , i*sizeof(struct MinMax),*fp);
+        fseek(fp, i*sizeof(struct MinMax), SEEK_SET);
+        fread(&m, sizeof(struct MinMax), 1, fp);
+        printf("\n[FROM FILE: min:%i  max:%i]" ,m.min, m.max);
+        fclose(fp);
     } else {
       // read from pipes
+      read(pipefd[0], &m, sizeof(struct MinMax));
+      printf( "\n[FROM PIPE: min:%i  max:%i]" ,m.min, m.max);
     }
 
     if (min < min_max.min) min_max.min = min;
