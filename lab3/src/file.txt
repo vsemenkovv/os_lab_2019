@@ -1,0 +1,93 @@
+/parallel_min_max --seed 1 --array_size 1 --pnum 1
+
+Min: 1804289383
+Max: 1804289383
+Elapsed time: 0.216000ms
+
+./parallel_min_max --seed 1 --array_size 1 --pnum 1
+
+Min: 1804289383
+Max: 1804289383
+Elapsed time: 0.253000ms
+
+2 Pipe
+
+/parallel_min_max --seed 1 --array_size 1 --pnum 2
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.295000ms
+/parallel_min_max --seed 1 --array_size 1 --pnum 2
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.306000ms
+
+3 pipe
+
+/parallel_min_max --seed 1 --array_size 1 --pnum 3
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.607000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$ ./parallel_min_max --seed 1 --array_size 1 --pnum 3
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.594000ms
+
+4 pipe
+
+/parallel_min_max --seed 1 --array_size 1 --pnum 4
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.467000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$ ./parallel_min_max --seed 1 --array_size 1 --pnum 4
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.488000ms
+
+5 pipe
+
+/parallel_min_max --seed 1 --array_size 1 --pnum 5
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.575000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$ ./parallel_min_max --seed 1 --array_size 1 --pnum 5
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.622000ms
+
+6 pipe
+
+/parallel_min_max --seed 1 --array_size 1 --pnum 6
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.803000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$ ./parallel_min_max --seed 1 --array_size 1 --pnum 6
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.642000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$
+
+
+
+8 pipe
+
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.883000ms
+user@0ccbd3cadbd7:/projects/os_lab_2019/lab3/src$ ./parallel_min_max --seed 1 --array_size 1 --pnum 8
+
+Min: 2147483647
+Max: -2147483648
+Elapsed time: 0.810000ms
+
+
