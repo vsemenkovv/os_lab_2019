@@ -165,7 +165,7 @@ int main(int argc, char **argv) {
       int alarm1 = ualarm(timeout*1000,0);
       int waiter;
       while (active_child_processes > 0) {
-          waiter = waitpid(0,NULL,WNOHANG);
+          waiter = waitpid(0,NULL,WCONTINUED);
           signal(SIGALRM, handle);
           if(waiter != 0)
           {
