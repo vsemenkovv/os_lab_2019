@@ -1,4 +1,3 @@
-
 /* Program to display address information about the process */
 /* Adapted from Gray, J., program 1.4 */
 #include <stdio.h>
@@ -44,7 +43,7 @@ int showit(p) char *p;
   if ((buffer2 = (char *)malloc((unsigned)(strlen(p) + 1))) != NULL) {
     printf("Alocated memory at %X\n", buffer2);
     strcpy(buffer2, p);    /* copy the string */
-    printf("%s", buffer2); /* Didplay the string */
+    printf("%s", buffer2); /* Display the string */
     free(buffer2);         /* Release location */
   } else {
     printf("Allocation error\n");
