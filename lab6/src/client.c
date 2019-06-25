@@ -154,6 +154,7 @@ int main(int argc, char **argv) {
       to[i].port = atoi(sPoint1);
       sPoint1=sPoint2+1;
   }
+  printf("servers + \n");
   // TODO: delete this and parallel work between servers
   //to[0].port = 20001;
   //memcpy(to[0].ip, "127.0.0.1", sizeof("127.0.0.1"));
@@ -179,11 +180,12 @@ int main(int argc, char **argv) {
       fprintf(stderr, "Socket creation failed!\n");
       exit(1);
     }
-
+    printf("connect? \n");
     if (connect(sck, (struct sockaddr *)&server, sizeof(server)) < 0) {
       fprintf(stderr, "Connection failed\n");
       exit(1);
     }
+      printf("connect+ \n");
 
     // TODO: for one server
     // parallel between servers

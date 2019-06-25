@@ -13,12 +13,16 @@
 
 #include "pthread.h"
 #include "multModulo.h"
+#include <signal.h>
+
 
 struct FactorialArgs {
   uint64_t begin;
   uint64_t end;
   uint64_t mod;
 };
+int Count=0;
+pid_t corePid=0;
 
 /*
 uint64_t MultModulo(uint64_t a, uint64_t b, uint64_t mod) {
@@ -48,8 +52,16 @@ void *ThreadFactorial(void *args) {
   printf("thread server!!!\n");
   return (void *)(uint64_t *)Factorial(fargs);
 }
+void CountTEMP(int k){
+    Count--;
+}
 
 int main(int argc, char **argv) {
+  printf("thread ans = %d\n", corePid);
+  corePid=getpid();
+  printf("thread ans = %d\n", corePid);
+  
+  signal(SIGUSR1, CountTEMP);
   int tnum = -1;
   int port = -1;
 
@@ -169,6 +181,8 @@ int main(int argc, char **argv) {
 
       fprintf(stdout, "Receive: %llu %llu %llu %llu\n", begin, end, mod, flag_fork);
 //fork
+      if(Count<5){
+      Count++;
       bool flag_fork_end=true;
       if(flag_fork==2){
           //делаем форк
@@ -226,12 +240,24 @@ int main(int argc, char **argv) {
           err = send(client_fd, buffer, sizeof(total), 0);
           if (err < 0) {
             fprintf(stderr, "Can't send data to client\n");
+            Count--;
+            printf("thread ans = %d\n", corePid);
+            kill(corePid, SIGUSR1);
+            printf("thread ans = %d\n", corePid);
             break;
           }
           //конец сервера
         // TODO: завершение сервера флаг
+          sleep(10);
+          kill(corePid, SIGUSR1);
           flagEnd=false;
           printf("server end \n");
+          
+  }
+  }
+  else{
+
+   break;   
   }
     }
 //уведомляем об окончании, усыпить клиента
